@@ -3,60 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz Fiesta Hardcore 💃🕺</title>
+<title>Fiesta Hardcore🎶</title>
 <style>
 body {
-  background: #111;
-  font-family: 'Courier New', monospace;
-  color: #ff66cc;
-  text-align: center;
+  margin: 0;
   padding: 20px;
+  font-family: 'Courier New', monospace;
+  background: #111;
+  color: #00ffcc;
+  text-align: center;
+  overflow-x: hidden;
+  animation: bgPulse 3s infinite alternate;
 }
+
+@keyframes bgPulse {
+  0% { background-color: #111; }
+  25% { background-color: #000; }
+  50% { background-color: #111; }
+  75% { background-color: #000033; }
+  100% { background-color: #111; }
+}
+
 .card {
   max-width: 400px;
   margin: auto;
   background: #222;
   padding: 20px;
   border-radius: 15px;
-  box-shadow: 0 0 20px #ff66cc;
-  animation: pulse 1.5s infinite;
+  box-shadow: 0 0 20px #00ffcc;
+  animation: pulse 1.5s infinite alternate;
 }
+
 @keyframes pulse {
-  0% { box-shadow: 0 0 15px #ff66cc; }
-  50% { box-shadow: 0 0 25px #ff3399; }
-  100% { box-shadow: 0 0 15px #ff66cc; }
+  0% { box-shadow: 0 0 15px #00ffcc; }
+  50% { box-shadow: 0 0 25px #00ffff; }
+  100% { box-shadow: 0 0 15px #00ffcc; }
 }
+
+h2, h3 {
+  color: #00ffcc;
+  text-shadow: 0 0 5px #00ffcc, 0 0 15px #00ffff;
+}
+
 button {
   display: block;
   width: 100%;
   padding: 12px;
   margin: 10px 0;
-  background: #ff66cc;
+  background: #00ffcc;
   color: black;
   font-size: 16px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  animation: buttonGlow 2s infinite alternate;
+  animation: btnGlow 1.5s infinite alternate;
 }
-button:hover { background: #ff3399; color:white; }
-@keyframes buttonGlow {
-  0% { box-shadow:0 0 5px #ff66cc; }
-  50% { box-shadow:0 0 20px #ff3399; }
-  100% { box-shadow:0 0 5px #ff66cc; }
+
+button:hover { background: #00ffff; color:black; }
+
+@keyframes btnGlow {
+  0% { box-shadow: 0 0 5px #00ffcc; }
+  50% { box-shadow: 0 0 20px #00ffff; }
+  100% { box-shadow: 0 0 5px #00ffcc; }
 }
+
 #resultado {
   display: none;
   margin-top: 20px;
   font-size: 20px;
+}
+
+#instagram {
+  display: none;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #222;
+  color: #00ffcc;
+  border: 2px solid #00ffff;
+  border-radius: 15px;
+  padding: 20px;
+  z-index: 999;
+  animation: pulse 1.5s infinite alternate;
+}
+
+#instagram a {
+  color: #00ffff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#instagram p { margin-top:10px; font-size:12px; }
+
+.secreto {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  opacity:0;
+  cursor:pointer;
+  z-index: 10;
 }
 </style>
 </head>
 <body>
 
 <div class="card" id="start">
-  <h2>🎶 Quiz de Fiesta</h2>
-  <p>¡Responde y veamos si conectamos en la fiesta! 😏</p>
+  <h2>🎶 Fiesta Hardcore EXTREME</h2>
+  <p>Responde rápido y descubre tu estilo de fiesta</p>
   <button onclick="startQuiz()">¡Empezar!</button>
 </div>
 
@@ -67,37 +121,33 @@ button:hover { background: #ff3399; color:white; }
 
 <div id="resultado"></div>
 
+<!-- Sonidito de respuesta -->
+<audio id="ding" src="ding.mp3"></audio>
+
+<!-- Zona secreta para Instagram (cubre todo el fondo) -->
+<div class="secreto" onclick="showInstagram()"></div>
+
+<!-- Cuadro Instagram -->
+<div id="instagram">
+  <p>✨ Sígueme en Instagram ✨</p>
+  <a href="https://www.instagram.com/xx_saulgimenez_?igsh=eXV0ODlhZzY4c2Jj" target="_blank">
+    @xx_saulgimenez_
+  </a>
+  <p>Toca fuera para cerrar</p>
+</div>
+
 <script>
 const preguntas = [
-  {
-    q: "¿Qué música disfrutas más en la fiesta?",
-    a: ["Techno 🎧", "Reggaetón ❌", "House 🏠"],
-    key: "musica"
-  },
-  {
-    q: "¿Qué prefieres beber?",
-    a: ["Cerveza 🍺", "Cóctel 🍹", "Agua 💧"],
-    key: "bebida"
-  },
-  {
-    q: "¿Te gusta bailar toda la noche?",
-    a: ["Sí 💃", "Solo un rato 🕺", "No bailo 😎"],
-    key: "baile"
-  },
-  {
-    q: "¿Fumas o no?",
-    a: ["Sí 💨","No 🚫","Solo socialmente 😏"],
-    key: "fumar"
-  },
-  {
-    q: "¿Te gusta conocer gente nueva en fiestas?",
-    a: ["Sí 🤝","Depende 😅","Prefiero estar con mi grupo"],
-    key: "social"
-  }
+  {q:"¿Qué música disfrutas más en la fiesta?", a:["Techno 🎧","Reggaetón ❌","House 🏠"], key:"musica"},
+  {q:"¿Qué prefieres beber?", a:["Cerveza 🍺","Cóctel 🍹","Agua 💧"], key:"bebida"},
+  {q:"¿Te gusta bailar toda la noche?", a:["Sí 💃","Solo un rato 🕺","No bailo 😎"], key:"baile"},
+  {q:"¿Fumas o no?", a:["Sí 💨","No 🚫","Solo socialmente 😏"], key:"fumar"},
+  {q:"¿Te gusta conocer gente nueva en fiestas?", a:["Sí 🤝","Depende 😅","Prefiero estar con mi grupo"], key:"social"}
 ];
 
-let current = 0;
-let respuestas = {};
+let current=0;
+let respuestas={};
+const ding = document.getElementById('ding');
 
 function startQuiz(){
   document.getElementById('start').style.display='none';
@@ -115,10 +165,12 @@ function loadQuestion(){
     btn.textContent = text;
     btn.onclick = ()=>{
       respuestas[q.key] = text;
+      ding.currentTime=0;
+      ding.play();
       current++;
-      if(current < preguntas.length){
+      if(current<preguntas.length){
         loadQuestion();
-      }else{
+      } else{
         showResult();
       }
     };
@@ -130,21 +182,31 @@ function showResult(){
   document.getElementById('quiz').style.display='none';
   const resDiv = document.getElementById('resultado');
 
-  // Crear mensaje personalizado según sus respuestas
   let msg = "🎉 ¡Gracias por jugar! Aquí está lo que me contaste:\n\n";
-
   msg += "🎧 Música: " + respuestas.musica + "\n";
   msg += "🍹 Bebida: " + respuestas.bebida + "\n";
   msg += "💃 Baile: " + respuestas.baile + "\n";
   msg += "💨 Fuma: " + respuestas.fumar + "\n";
   msg += "🤝 Conocer gente: " + respuestas.social + "\n\n";
-
-  msg += "Si te animas, podemos tomar algo juntos 😉";
+  msg += "¡Nos vemos en la pista de baile! 😎";
 
   resDiv.style.whiteSpace = "pre-line";
   resDiv.textContent = msg;
   resDiv.style.display='block';
 }
+
+// Mostrar Instagram
+function showInstagram(){
+  document.getElementById('instagram').style.display='block';
+}
+
+// Cerrar Instagram tocando fuera
+document.addEventListener('click', function(e){
+  const insta = document.getElementById('instagram');
+  if(insta.style.display=='block' && !insta.contains(e.target) && !e.target.classList.contains('secreto')){
+    insta.style.display='none';
+  }
+});
 </script>
 
 </body>
