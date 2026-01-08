@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ketaverso Liguero - Fiesta 💃🕺</title>
+<style>
+  body {
+    background: #111;
+    font-family: 'Courier New', monospace;
+    color: #ff66cc;
+    text-align: center;
+    padding: 20px;
+    overflow-x: hidden;
+  }
+
+  .card {
+    max-width: 400px;
+    margin: auto;
+    background: #222;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #ff66cc;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 15px #ff66cc; }
+    50% { box-shadow: 0 0 25px #ff3399; }
+    100% { box-shadow: 0 0 15px #ff66cc; }
+  }
+
+  h2, h3 {
+    color: #ff66cc;
+    text-shadow: 0 0 5px #ff66cc, 0 0 10px #ff3399;
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: #ff66cc;
+    color: black;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    animation: buttonGlow 2s infinite alternate;
+  }
+
+  button:hover {
+    background: #ff3399;
+    color: white;
+  }
+
+  @keyframes buttonGlow {
+    0% { box-shadow: 0 0 5px #ff66cc; }
+    50% { box-shadow: 0 0 20px #ff3399; }
+    100% { box-shadow: 0 0 5px #ff66cc; }
+  }
+
+  #resultado {
+    display: none;
+    margin-top: 20px;
+    font-size: 20px;
+    animation: glitchText 1s infinite;
+  }
+
+  @keyframes glitchText {
+    0% { text-shadow: 2px 0 #ff66cc, -2px 0 #ff3399; }
+    25% { text-shadow: -2px 0 #ff66cc, 2px 0 #ff3399; }
+    50% { text-shadow: 2px 2px #ff66cc, -2px -2px #ff3399; }
+    75% { text-shadow: -2px -2px #ff66cc, 2px 2px #ff3399; }
+    100% { text-shadow: 2px 0 #ff66cc, -2px 0 #ff3399; }
+  }
+
+  video {
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 10px;
+    display: none;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Pantalla inicio -->
+<div class="card" id="start">
+  <h2>🎉 Quiz Coqueto</h2>
+  <p>Descubre si eres compatible conmigo 😏</p>
+  <button onclick="startQuiz()">¡Vamos!</button>
+</div>
+
+<!-- Quiz -->
+<div class="card" id="quiz" style="display:none;">
+  <h3 id="pregunta"></h3>
+  <div id="respuestas"></div>
+</div>
+
+<!-- Resultado final -->
+<div id="resultado"></div>
+
+<!-- Sonidito de respuesta -->
+<audio id="ding" src="ding.mp3"></audio>
+
+<script>
+const preguntas = [
+  {
+    q: "¿Qué bebida prefieres en la fiesta?",
+    a: ["Cerveza 🍺","Cóctel 🍹","Agua 💧"],
+    points: [1,2,0]
+  },
+  {
+    q: "¿Qué bailas más?",
+    a: ["Salsa 💃","Electrónica 🎧","No bailo 😎"],
+    points: [2,1,0]
+  },
+  {
+    q: "¿Tienes sentido del humor?",
+    a: ["Siempre 😂","Depende 😏","No mucho 😶"],
+    points: [2,1,0]
+  },
+  {
+    q: "¿Te gustan los retos?",
+    a: ["Sí 🔥","Depende 🤔","No 😅"],
+    points: [2,1,0]
+  },
+  {
+    q: "El plan ideal es…",
+    a: ["Bailar toda la noche 🕺","Charlar un rato 🗣️","Tomar algo 🍹"],
+    points: [2,1,0]
+  }
+];
+
+let current = 0;
+let score = 0;
+
+const ding = document.getElementById('ding');
+
+function startQuiz(){
+  document.getElementById('start').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  loadQuestion();
+}
+
+function loadQuestion(){
+  const q = preguntas[current];
+  document.getElementById('pregunta').textContent = q.q;
+  const resDiv = document.getElementById('respuestas');
+  resDiv.innerHTML = '';
+  q.a.forEach((text,i)=>{
+    const btn = document.createElement('button');
+    btn.textContent = text;
+    btn.onclick = ()=>{
+      score += q.points[i];
+      ding.currentTime=0;
+      ding.play(); // sonido corto
+      current++;
+      if(current < preguntas.length){
+        loadQuestion();
+      }else{
+        showResult();
+      }
+    };
+    resDiv.appendChild(btn);
+  });
+}
+
+function showResult(){
+  document.getElementById('quiz').style.display='none';
+  const resDiv = document.getElementById('resultado');
+  let msg="";
+  if(score >= 8){
+    msg = "🔥 Eres totalmente compatible 😏 ¡Vamos a bailar!";
+  } else if(score >=5){
+    msg = "😉 Hay química… aún podemos conocernos mejor";
+  } else{
+    msg = "😅 Parece que necesitamos otra fiesta para conectar…";
+  }
+  resDiv.innerHTML = msg + `<br><br>🎶 Mini Rickroll<br>
+  <video autoplay loop muted><source src="rickroll.mp4" type="video/mp4"></video>`;
+  resDiv.style.display='block';
+}
+</script>
+
+</body>
+</html>
