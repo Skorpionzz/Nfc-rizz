@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fiesta Hardcore🎶</title>
+<title>Fiesta Hardcore EXTREME 🎶</title>
 <style>
 body {
   margin: 0;
@@ -32,6 +32,8 @@ body {
   border-radius: 15px;
   box-shadow: 0 0 20px #00ffcc;
   animation: pulse 1.5s infinite alternate;
+  position: relative;
+  z-index: 50; /* asegura que los botones estén encima de fondo */
 }
 
 @keyframes pulse {
@@ -57,6 +59,8 @@ button {
   border-radius: 8px;
   cursor: pointer;
   animation: btnGlow 1.5s infinite alternate;
+  position: relative;
+  z-index: 51; /* encima de la zona secreta */
 }
 
 button:hover { background: #00ffff; color:black; }
@@ -71,6 +75,8 @@ button:hover { background: #00ffff; color:black; }
   display: none;
   margin-top: 20px;
   font-size: 20px;
+  position: relative;
+  z-index: 50;
 }
 
 #instagram {
@@ -98,11 +104,13 @@ button:hover { background: #00ffff; color:black; }
 
 .secreto {
   position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  opacity:0;
-  cursor:pointer;
-  z-index: 10;
+  bottom: 10px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  opacity: 0.1;  /* semi oculta */
+  cursor: pointer;
+  z-index: 100;
 }
 </style>
 </head>
@@ -124,7 +132,7 @@ button:hover { background: #00ffff; color:black; }
 <!-- Sonidito de respuesta -->
 <audio id="ding" src="ding.mp3"></audio>
 
-<!-- Zona secreta para Instagram (cubre todo el fondo) -->
+<!-- Zona secreta para Instagram -->
 <div class="secreto" onclick="showInstagram()"></div>
 
 <!-- Cuadro Instagram -->
