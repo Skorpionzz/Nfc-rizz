@@ -114,7 +114,7 @@ button:hover { background: #00ffff; color:black; }
   z-index: 100;
 }
 
-/* Corazón encima de la zona secreta */
+/* Corazón encima de la zona secreta con animación */
 .secreto::after {
   content: "❤️";
   position: absolute;
@@ -122,8 +122,14 @@ button:hover { background: #00ffff; color:black; }
   left: 50%;
   transform: translateX(-50%);
   font-size: 24px;
-  opacity: 1;  /* poco visible */
+  color: rgba(255,0,0,0.3); /* rojo suave */
   pointer-events: none; /* no bloquea clicks */
+  animation: heartPulse 1.5s infinite alternate; /* parpadeo */
+}
+
+@keyframes heartPulse {
+  0% { transform: translateX(-50%) scale(1); opacity: 0.3; }
+  100% { transform: translateX(-50%) scale(1.1); opacity: 0.35; }
 }
 </style>
 </head>
@@ -209,7 +215,7 @@ function showResult(){
   msg += "💃 Baile: " + respuestas.baile + "\n";
   msg += "💨 Fuma: " + respuestas.fumar + "\n";
   msg += "🤝 Conocer gente: " + respuestas.social + "\n\n";
-  msg += "te apetece tomar algo? 😎";
+  msg += "¡Nos vemos en la pista de baile! 😎";
 
   resDiv.style.whiteSpace = "pre-line";
   resDiv.textContent = msg;
