@@ -3,141 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ketaverso Liguero - Fiesta 💃🕺</title>
+<title>Quiz Fiesta Hardcore 💃🕺</title>
 <style>
-  body {
-    background: #111;
-    font-family: 'Courier New', monospace;
-    color: #ff66cc;
-    text-align: center;
-    padding: 20px;
-    overflow-x: hidden;
-  }
-
-  .card {
-    max-width: 400px;
-    margin: auto;
-    background: #222;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px #ff66cc;
-    animation: pulse 1.5s infinite;
-  }
-
-  @keyframes pulse {
-    0% { box-shadow: 0 0 15px #ff66cc; }
-    50% { box-shadow: 0 0 25px #ff3399; }
-    100% { box-shadow: 0 0 15px #ff66cc; }
-  }
-
-  h2, h3 {
-    color: #ff66cc;
-    text-shadow: 0 0 5px #ff66cc, 0 0 10px #ff3399;
-  }
-
-  button {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    background: #ff66cc;
-    color: black;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    animation: buttonGlow 2s infinite alternate;
-  }
-
-  button:hover {
-    background: #ff3399;
-    color: white;
-  }
-
-  @keyframes buttonGlow {
-    0% { box-shadow: 0 0 5px #ff66cc; }
-    50% { box-shadow: 0 0 20px #ff3399; }
-    100% { box-shadow: 0 0 5px #ff66cc; }
-  }
-
-  #resultado {
-    display: none;
-    margin-top: 20px;
-    font-size: 20px;
-    animation: glitchText 1s infinite;
-  }
-
-  @keyframes glitchText {
-    0% { text-shadow: 2px 0 #ff66cc, -2px 0 #ff3399; }
-    25% { text-shadow: -2px 0 #ff66cc, 2px 0 #ff3399; }
-    50% { text-shadow: 2px 2px #ff66cc, -2px -2px #ff3399; }
-    75% { text-shadow: -2px -2px #ff66cc, 2px 2px #ff3399; }
-    100% { text-shadow: 2px 0 #ff66cc, -2px 0 #ff3399; }
-  }
-
-  video {
-    width: 100%;
-    margin-top: 15px;
-    border-radius: 10px;
-    display: none;
-  }
-
+body {
+  background: #111;
+  font-family: 'Courier New', monospace;
+  color: #ff66cc;
+  text-align: center;
+  padding: 20px;
+}
+.card {
+  max-width: 400px;
+  margin: auto;
+  background: #222;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #ff66cc;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 15px #ff66cc; }
+  50% { box-shadow: 0 0 25px #ff3399; }
+  100% { box-shadow: 0 0 15px #ff66cc; }
+}
+button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  background: #ff66cc;
+  color: black;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  animation: buttonGlow 2s infinite alternate;
+}
+button:hover { background: #ff3399; color:white; }
+@keyframes buttonGlow {
+  0% { box-shadow:0 0 5px #ff66cc; }
+  50% { box-shadow:0 0 20px #ff3399; }
+  100% { box-shadow:0 0 5px #ff66cc; }
+}
+#resultado {
+  display: none;
+  margin-top: 20px;
+  font-size: 20px;
+}
 </style>
 </head>
 <body>
 
-<!-- Pantalla inicio -->
 <div class="card" id="start">
-  <h2>🎉 Quiz Coqueto</h2>
-  <p>Descubre si eres compatible conmigo 😏</p>
-  <button onclick="startQuiz()">¡Vamos!</button>
+  <h2>🎶 Quiz de Fiesta</h2>
+  <p>¡Responde y veamos si conectamos en la fiesta! 😏</p>
+  <button onclick="startQuiz()">¡Empezar!</button>
 </div>
 
-<!-- Quiz -->
 <div class="card" id="quiz" style="display:none;">
   <h3 id="pregunta"></h3>
   <div id="respuestas"></div>
 </div>
 
-<!-- Resultado final -->
 <div id="resultado"></div>
-
-<!-- Sonidito de respuesta -->
-<audio id="ding" src="ding.mp3"></audio>
 
 <script>
 const preguntas = [
   {
-    q: "¿Qué bebida prefieres en la fiesta?",
-    a: ["Cerveza 🍺","Cóctel 🍹","Agua 💧"],
-    points: [1,2,0]
+    q: "¿Qué música disfrutas más en la fiesta?",
+    a: ["Techno 🎧", "Reggaetón ❌", "House 🏠"],
+    key: "musica"
   },
   {
-    q: "¿Qué bailas más?",
-    a: ["Salsa 💃","Electrónica 🎧","No bailo 😎"],
-    points: [2,1,0]
+    q: "¿Qué prefieres beber?",
+    a: ["Cerveza 🍺", "Cóctel 🍹", "Agua 💧"],
+    key: "bebida"
   },
   {
-    q: "¿Tienes sentido del humor?",
-    a: ["Siempre 😂","Depende 😏","No mucho 😶"],
-    points: [2,1,0]
+    q: "¿Te gusta bailar toda la noche?",
+    a: ["Sí 💃", "Solo un rato 🕺", "No bailo 😎"],
+    key: "baile"
   },
   {
-    q: "¿Te gustan los retos?",
-    a: ["Sí 🔥","Depende 🤔","No 😅"],
-    points: [2,1,0]
+    q: "¿Fumas o no?",
+    a: ["Sí 💨","No 🚫","Solo socialmente 😏"],
+    key: "fumar"
   },
   {
-    q: "El plan ideal es…",
-    a: ["Bailar toda la noche 🕺","Charlar un rato 🗣️","Tomar algo 🍹"],
-    points: [2,1,0]
+    q: "¿Te gusta conocer gente nueva en fiestas?",
+    a: ["Sí 🤝","Depende 😅","Prefiero estar con mi grupo"],
+    key: "social"
   }
 ];
 
 let current = 0;
-let score = 0;
-
-const ding = document.getElementById('ding');
+let respuestas = {};
 
 function startQuiz(){
   document.getElementById('start').style.display='none';
@@ -154,9 +114,7 @@ function loadQuestion(){
     const btn = document.createElement('button');
     btn.textContent = text;
     btn.onclick = ()=>{
-      score += q.points[i];
-      ding.currentTime=0;
-      ding.play(); // sonido corto
+      respuestas[q.key] = text;
       current++;
       if(current < preguntas.length){
         loadQuestion();
@@ -171,16 +129,20 @@ function loadQuestion(){
 function showResult(){
   document.getElementById('quiz').style.display='none';
   const resDiv = document.getElementById('resultado');
-  let msg="";
-  if(score >= 8){
-    msg = "🔥 Eres totalmente compatible 😏 ¡Vamos a bailar!";
-  } else if(score >=5){
-    msg = "😉 Hay química… aún podemos conocernos mejor";
-  } else{
-    msg = "😅 Parece que necesitamos otra fiesta para conectar…";
-  }
-  resDiv.innerHTML = msg + `<br><br>🎶 Mini Rickroll<br>
-  <video autoplay loop muted><source src="rickroll.mp4" type="video/mp4"></video>`;
+
+  // Crear mensaje personalizado según sus respuestas
+  let msg = "🎉 ¡Gracias por jugar! Aquí está lo que me contaste:\n\n";
+
+  msg += "🎧 Música: " + respuestas.musica + "\n";
+  msg += "🍹 Bebida: " + respuestas.bebida + "\n";
+  msg += "💃 Baile: " + respuestas.baile + "\n";
+  msg += "💨 Fuma: " + respuestas.fumar + "\n";
+  msg += "🤝 Conocer gente: " + respuestas.social + "\n\n";
+
+  msg += "Si te animas, podemos tomar algo juntos 😉";
+
+  resDiv.style.whiteSpace = "pre-line";
+  resDiv.textContent = msg;
   resDiv.style.display='block';
 }
 </script>
