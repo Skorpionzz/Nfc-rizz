@@ -30,28 +30,29 @@
       margin-top: 0;
     }
 
-    /* ZONA SECRETA */
+    /* ZONA SECRETA (MISMO ESTILO, SOLO FIX) */
     .secreto {
       margin-top: 25px;
       padding: 15px;
       background: #111;
       border-radius: 12px;
-      position: relative;      /* OBLIGATORIO */
-      overflow: visible;       /* OBLIGATORIO */
+
+      position: relative;   /* 🔧 AÑADIDO */
+      overflow: visible;    /* 🔧 AÑADIDO */
     }
 
-    /* CORAZÓN ENCIMA */
+    /* CORAZÓN (IGUAL QUE ANTES) */
     .secreto::after {
       content: "❤️";
       position: absolute;
-      top: -14px;
+      top: -10px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 24px;
       color: rgba(255, 0, 0, 1);
       pointer-events: none;
-      z-index: 10;
       animation: heartPulse 1.5s infinite alternate;
+      z-index: 10;
     }
 
     @keyframes heartPulse {
@@ -59,7 +60,7 @@
         transform: translateX(-50%) scale(1);
       }
       100% {
-        transform: translateX(-50%) scale(1.15);
+        transform: translateX(-50%) scale(1.1);
       }
     }
 
@@ -73,10 +74,6 @@
       font-size: 15px;
       cursor: pointer;
     }
-
-    .btn:hover {
-      background: #ff4d6d;
-    }
   </style>
 </head>
 
@@ -84,11 +81,11 @@
 
   <div class="card">
     <h1>NFC Rizz</h1>
-    <p>Acerca el móvil y descubre algo especial 😏</p>
+    <p>Acerca el móvil y descubre algo especial</p>
 
     <div class="secreto">
-      <p>Zona secreta desbloqueada 🔒</p>
-      <button class="btn">Acción secreta</button>
+      <p>Zona secreta</p>
+      <button class="btn">Continuar</button>
     </div>
   </div>
 
