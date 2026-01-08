@@ -102,6 +102,7 @@ button:hover { background: #00ffff; color:black; }
 
 #instagram p { margin-top:10px; font-size:12px; }
 
+/* Zona secreta para Instagram */
 .secreto {
   position: fixed;
   bottom: 10px;
@@ -111,6 +112,18 @@ button:hover { background: #00ffff; color:black; }
   opacity: 0.1;  /* semi oculta */
   cursor: pointer;
   z-index: 100;
+}
+
+/* Corazón encima de la zona secreta */
+.secreto::after {
+  content: "❤️";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  opacity: 0.2;  /* poco visible */
+  pointer-events: none; /* no bloquea clicks */
 }
 </style>
 </head>
@@ -147,7 +160,7 @@ button:hover { background: #00ffff; color:black; }
 <script>
 const preguntas = [
   {q:"¿Qué música disfrutas más en la fiesta?", a:["Techno 🎧","Reggaetón ❌","House 🏠"], key:"musica"},
-  {q:"¿Qué prefieres beber?", a:["Cerveza 🍺","Cóctel 🍹","Agua 💧"], key:"bebida"},
+  {q:"Qué prefieres beber?", a:["Cerveza 🍺","Cóctel 🍹","Agua 💧"], key:"bebida"},
   {q:"¿Te gusta bailar toda la noche?", a:["Sí 💃","Solo un rato 🕺","No bailo 😎"], key:"baile"},
   {q:"¿Fumas o no?", a:["Sí 💨","No 🚫","Solo socialmente 😏"], key:"fumar"},
   {q:"¿Te gusta conocer gente nueva en fiestas?", a:["Sí 🤝","Depende 😅","Prefiero estar con mi grupo"], key:"social"}
